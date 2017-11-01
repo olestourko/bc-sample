@@ -1,7 +1,4 @@
 from flask import Flask
-app = Flask(__name__)
-
-from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 
@@ -12,19 +9,21 @@ export FLASK_APP=$(pwd)/src/app.py
 export CONFIG_FILEPATH=$(pwd)/settings.cfg
 flask run
 """
-app.config.from_envvar('CONFIG_FILEPATH') # http://flask.pocoo.org/docs/0.12/config/
-
+app.config.from_envvar('CONFIG_FILEPATH')  # http://flask.pocoo.org/docs/0.12/config/
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 
 class FeatureRequest(db.Model):
     __tablename__ = 'feature_request'
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Text()
-    target_date = db.Date()
+    title = db.Column(db.String(256))
+    description = db.Column(db.Text())
+    target_date = db.Column(db.Date())
     # Relation to Client
     # Relation to ProductArea
     pass
+
 
 class Client(db.Model):
     __tablename__ = 'client'
@@ -33,11 +32,13 @@ class Client(db.Model):
     # Relation to FeatureRequests
     pass
 
+
 class ProductArea(db.Model):
     __tablename__ = 'product_area'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     pass
+
 
 """ Flask Many-To-Many Relationships with extra fields:
     http://docs.sqlalchemy.org/en/latest/orm/basic_relationships.html?highlight=relationships#association-object 
@@ -60,6 +61,8 @@ class FeatureRequestToClient(db.Model):
     feature_request_id
     product_area_id
 """
+
+
 class FeatureRequestToProductArea(db.Model):
     __tablename__ = 'feature_request_to_product_area'
     feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id'), primary_key=True)
