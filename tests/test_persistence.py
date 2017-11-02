@@ -1,7 +1,7 @@
 import unittest
 
 from src import app, db
-from src.app import FeatureRequest, Client, ProductArea
+from src.models import FeatureRequest, Client, ProductArea
 import datetime
 
 class TestPersistence(unittest.TestCase):
