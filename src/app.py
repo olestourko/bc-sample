@@ -1,18 +1,8 @@
-from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
+
 from flask_migrate import Migrate
+from src import app, db
 
-app = Flask(__name__)
-"""
-Example run
-export FLASK_APP=$(pwd)/src/app.py
-export CONFIG_FILEPATH=$(pwd)/settings.cfg
-flask run
-"""
-app.config.from_envvar('CONFIG_FILEPATH')  # http://flask.pocoo.org/docs/0.12/config/
-db = SQLAlchemy(app)
 migrate = Migrate(app, db)
-
 
 class FeatureRequest(db.Model):
     __tablename__ = 'feature_request'

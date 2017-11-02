@@ -1,6 +1,7 @@
 .idea
 venv
 *.pyc
-settings.cfg
+config.py
+tests/config.py
 # I'll include migrations later when I have a more finalized schema
 migrations
