@@ -14,6 +14,18 @@ class FeatureRequest(db.Model):
     clients = association_proxy("feature_request_to_clients", "client")
     product_areas = association_proxy("feature_request_to_product_areas", "product_area")
 
+    @property
+    def client_priority(self):
+        if len(self.feature_request_to_clients) == 1:
+            return self.feature_request_to_clients[0].client_priority
+        else:
+            return None
+
+    @client_priority.setter
+    def client_priority(self, value):
+        if len(self.feature_request_to_clients) == 1:
+            self.feature_request_to_clients[0].client_priority = value
+
 
 class Client(db.Model):
     __tablename__ = 'client'

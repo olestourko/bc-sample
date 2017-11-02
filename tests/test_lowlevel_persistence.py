@@ -4,7 +4,7 @@ from src import app, db
 from src.models import FeatureRequest, Client, ProductArea
 import datetime
 
-class TestPersistence(unittest.TestCase):
+class TestLowlevelPersistence(unittest.TestCase):
 
     def setUp(self):
         app.config.from_object('tests.config')

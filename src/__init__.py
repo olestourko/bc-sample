@@ -4,7 +4,7 @@ from flask_sqlalchemy import SQLAlchemy
 app = Flask(__name__)
 """
 Example run
-export FLASK_APP=$(pwd)/src/app.py
+export FLASK_APP=$(pwd)/src/application.py
 export CONFIG_FILEPATH=$(pwd)/config.py
 flask run
 """

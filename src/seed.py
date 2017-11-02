@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import exc
-from app import Client, ProductArea
+from application import Client, ProductArea
 
 
 def seed_db(database):
