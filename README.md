@@ -21,6 +21,7 @@ The ORM.
 ### Q&A
 **Q:**
 Why are you using _many-to-many_ relationships with an associative object when you can just use simple _one-to-one_ and _one-to-many relationships_ instead?
+
 **A:**
 1. Future extensibility. What if a feature request can have multiple product areas or involve multiple clients? This has come up a lot in my experience.
 2. It lets me embed extra information about a relation into its own table, for example `client_priority`.

@@ -1,4 +1,4 @@
-
+from flask import render_template
 from flask_migrate import Migrate
 from src import app, db
 from models import *
@@ -6,8 +6,12 @@ from models import *
 migrate = Migrate(app, db)
 
 @app.route('/')
-def hello_world():
-    return 'Got here'
+def list():
+    return render_template('list.html')
+
+@app.route('/create')
+def create():
+    return render_template('create.html')
 
 def set_feature_client(feature, client):
     """
