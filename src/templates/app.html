@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+    <script src="{{ url_for('static', filename='packages/knockout/build/output/knockout-latest.js') }}"></script>
+    <style rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/normalize.css') }}"></style>
+    <style rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/skeleton.css') }}"></style>
 </head>
     <body>
         <div>
