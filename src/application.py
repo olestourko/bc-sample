@@ -6,12 +6,8 @@ from models import *
 migrate = Migrate(app, db)
 
 @app.route('/')
-def list():
-    return render_template('list.html')
-
-@app.route('/create')
-def create():
-    return render_template('create.html')
+def render():
+    return render_template('app.html')
 
 def set_feature_client(feature, client):
     """

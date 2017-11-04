@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.2/knockout-min.js"></script>
+</head>
+    <body>
+        <div>
+            <label>
+                Title
+                <input>
+            </label>
+            <label>
+                Description
+                <input>
+            </label>
+                <label>
+                Due Date
+                <input>
+            </label>
+            <lablel>
+                Client
+                <select data-bind="foreach: clients">
+                    <option data-bind="value: id, text: name"></option>
+                </select>
+            </lablel>
+            <label>
+                Priority
+                <input>
+            </label>
+            <lablel>
+                Product Area
+                <select data-bind="foreach: productAreas">
+                    <option data-bind="value: id, text: name"></option>
+                </select>
+            </lablel>
+        </div>
+        <script>
+            function FeatureRequestViewModel() {
+                var self = this;
+                self.clientId = ko.observable();
+                self.productAreaId = ko.observable();
+                self.clients = [
+                    { id: 0, name: "Client A" },
+                    { id: 1, name: "Client B" },
+                    { id: 2, name: "Client C" }
+                ];
+                self.productAreas = [
+                    { id: 0, name: "Area A" },
+                    { id: 1, name: "Area B" },
+                    { id: 2, name: "Area C" },
+                    { id: 3, name: "Area D" }
+                ]
+            };
+
+            ko.applyBindings(FeatureRequestViewModel());
+        </script>
+    </body>
+</html>
