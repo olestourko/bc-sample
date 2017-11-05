@@ -17,6 +17,9 @@ The ORM.
 - [Flask Integration](http://flask.pocoo.org/docs/0.12/quickstart/)
 - [Migrations Extension](https://flask-migrate.readthedocs.io/en/latest/)
 
+#### [Marshmallow](https://marshmallow.readthedocs.io/en/latest/)
+Model mapper for SQLAlchemy model -> JSON.
+
 ---
 ### Q&A
 **Q:**
