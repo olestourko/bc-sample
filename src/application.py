@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 from flask_migrate import Migrate
 from src import app, db
 from models import *
@@ -35,6 +35,26 @@ def fetch_feature_requests():
     result = [schema.dump(feature_request).data for feature_request in feature_requests]
     pprint(result)
     return json.dumps(result, indent=4, separators=(',', ': '))
+
+@app.route('/create_feature_request', methods=['POST'])
+def create_feature_request():
+    from datetime import datetime
+    date = datetime.strptime(request.form['targetDate'], '%d-%m-%Y').date()
+    feature_request = FeatureRequest(
+        title=request.form['title'],
+        description=request.form['description'],
+        target_date=datetime.strptime(request.form['targetDate'], '%d-%m-%Y').date()
+    )
+
+    client = Client.query.get(request.form['clientId'])
+    product_area = ProductArea.query.get(request.form['productAreaId'])
+    set_feature_client(feature_request, client)
+    set_feature_product_area(feature_request, product_area)
+    set_feature_priority(feature_request, request.form['priority'])
+
+    # db.session.add(feature_request)
+    # db.session.commit()
+    return 'OK'
 
 def set_feature_client(feature, client):
     """

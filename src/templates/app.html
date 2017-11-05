@@ -19,7 +19,7 @@
 </head>
     <body class="container">
         <div data-bind='component: { name: "list-feature-request", params: { featureRequests: featureRequests }}'></div>
-        <div data-bind='component: "create-feature-request"'></div>
+        <div data-bind='component: { name: "create-feature-request", params: { clients: clients, productAreas: productAreas }}'></div>
         <script src="{{ url_for('static', filename='app.js') }}"></script>
     </body>
 </html>

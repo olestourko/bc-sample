@@ -2,14 +2,14 @@
 <input placeholder="Title" data-bind="value: title" class="u-full-width">
 <textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
 <div class="u-fulll-width">
-    <input placeholder="Due Date">
-    <input placeholder="Priority">
+    <input data-bind="value: targetDate" placeholder="Target Date">
+    <input data-bind="value: priority" placeholder="Priority">
 </div>
 <div class="u-fulll-width">
-    <select data-bind="foreach: clients">
+    <select data-bind="foreach: clients, value: selectedClient">
         <option data-bind="value: id, text: name"></option>
     </select>
-    <select data-bind="foreach: productAreas">
+    <select data-bind="foreach: productAreas, value: selectedProductArea">
         <option data-bind="value: id, text: name"></option>
     </select>
 </div>

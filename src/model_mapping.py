@@ -10,6 +10,7 @@ class ProductAreaSchema(Schema):
     name = fields.Str()
 
 class FeatureRequestSchema(Schema):
+    id = fields.Integer()
     title = fields.Str()
     description = fields.Str()
     target_date = fields.Date()

@@ -3,6 +3,8 @@
 var messageBus = new ko.subscribable();
 
 var featureRequests = ko.observableArray();
+var clients = ko.observableArray();
+var productAreas = ko.observableArray();
 
 // List feature requests
 ko.components.register('list-feature-request', {
@@ -18,37 +20,57 @@ ko.components.register('create-feature-request', {
     viewModel: function(params) {
         self.title = ko.observable();
         self.description = ko.observable();
-        self.clients = [
-            { id: 0, name: "Client A" },
-            { id: 1, name: "Client B" },
-            { id: 2, name: "Client C" }
-        ];
-        self.productAreas = [
-            { id: 0, name: "Area A" },
-            { id: 1, name: "Area B" },
-            { id: 2, name: "Area C" },
-            { id: 3, name: "Area D" }
-        ];
+        self.targetDate = ko.observable();
+        self.priority = ko.observable();
+        self.selectedClient = ko.observable();
+        self.selectedProductArea = ko.observable();
+
+        self.clients = params.clients;
+        self.productAreas = params.productAreas;
         self.create = function() {
             messageBus.notifySubscribers({
-                id: 0,
                 title: self.title(),
-                description: self.description()
+                description: self.description(),
+                targetDate: self.targetDate(),
+                priority: self.priority(),
+                clientId: self.selectedClient(),
+                productAreaId: self.selectedProductArea()
             }, 'create');
             self.clear();
         };
         self.clear = function() {
             self.title("");
             self.description("");
+            self.targetDate("");
+            self.priority("");
         }
     },
     template: { require: 'text!static/knockout-templates/create-feature-request.html' }
 });
 
-messageBus.subscribe(function(value) {
-    featureRequests.push(value);
+messageBus.subscribe(function(formData) {
+    jQuery.post({
+        url: 'create_feature_request',
+        data: formData,
+        success: function(serverResponseData) {
+            formData['id'] = 0;
+            featureRequests.push(formData);
+        }
+    });
 }, null, "create");
 
 jQuery(function() {
     ko.applyBindings();
+
+    jQuery.getJSON('fetch_clients', function(data) {
+        ko.utils.arrayPushAll(clients, data);
+    });
+
+    jQuery.getJSON('fetch_product_areas', function(data) {
+        ko.utils.arrayPushAll(productAreas, data);
+    });
+
+    jQuery.getJSON('fetch_feature_requests', function(data) {
+        ko.utils.arrayPushAll(featureRequests, data);
+    });
 });
