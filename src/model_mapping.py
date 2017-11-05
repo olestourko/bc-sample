@@ -16,3 +16,5 @@ class FeatureRequestSchema(Schema):
     target_date = fields.Date()
     clients = fields.Nested(ClientSchema, many=True)
     product_areas = fields.Nested(ProductAreaSchema, many=True)
+    # http://marshmallow.readthedocs.io/en/latest/custom_fields.html#function-fields
+    priority = fields.Function(lambda obj: obj.feature_request_to_clients[0].client_priority)

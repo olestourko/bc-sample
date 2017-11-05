@@ -10,7 +10,6 @@ var productAreas = ko.observableArray();
 ko.components.register('list-feature-request', {
     viewModel: function(params) {
         self.featureRequests = params.featureRequests
-        self.title = ko.observableArray();
     },
     template: { require: 'text!static/knockout-templates/list-feature-request.html' }
 });
@@ -53,8 +52,11 @@ messageBus.subscribe(function(formData) {
         url: 'create_feature_request',
         data: formData,
         success: function(serverResponseData) {
-            formData['id'] = 0;
-            featureRequests.push(formData);
+            if(serverResponseData.status == 'ok') {
+                fetch_feature_requests();
+            } else {
+                // Handle error here
+            }
         }
     });
 }, null, "create");
@@ -66,11 +68,16 @@ jQuery(function() {
         ko.utils.arrayPushAll(clients, data);
     });
 
+    fetch_feature_requests();
+
     jQuery.getJSON('fetch_product_areas', function(data) {
         ko.utils.arrayPushAll(productAreas, data);
     });
+});
 
+function fetch_feature_requests() {
+    featureRequests.removeAll();
     jQuery.getJSON('fetch_feature_requests', function(data) {
         ko.utils.arrayPushAll(featureRequests, data);
     });
-});
+}

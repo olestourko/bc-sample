@@ -4,6 +4,7 @@ from sqlalchemy import exc
 from src import app, db
 from models import Client, ProductArea, FeatureRequest
 import datetime
+from src.application import set_feature_priority
 
 def seed_db(database):
     try:
@@ -24,6 +25,8 @@ def seed_db(database):
         )
         feature_request.clients.append(client_1)
         feature_request.product_areas.append(product_area_1)
+        set_feature_priority(1)
+
         database.session.add(feature_request)
 
         database.session.commit()

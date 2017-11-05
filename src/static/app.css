@@ -1,0 +1,8 @@
+.feature-request {
+    border-bottom: 1px solid #E1E1E1;
+    margin-bottom: 1.5em;
+}
+
+.feature-request:last-of-type {
+    border-bottom: none;
+}
