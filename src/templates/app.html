@@ -4,59 +4,77 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="{{ url_for('static', filename='packages/knockout/build/output/knockout-latest.js') }}"></script>
-    <style rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/normalize.css') }}"></style>
-    <style rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/skeleton.css') }}"></style>
+    <script src="{{ url_for('static', filename='packages/jquery/dist/jquery.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='packages/requirejs/require.js') }}"></script>
+    <script>
+    require.config({
+        paths: {
+            'text': '{{ url_for('static', filename='packages/requirejs-text/text') }}'
+        },
+        urlArgs: "bust=" + (new Date()).getTime() // Disable caching
+    });
+    </script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/normalize.css') }}"/>
+    <link rel="stylesheet" href="{{ url_for('static', filename='packages/skeleton-css/css/skeleton.css') }}"/>
 </head>
-    <body>
-        <div>
-            <label>
-                Title
-                <input>
-            </label>
-            <label>
-                Description
-                <input>
-            </label>
-                <label>
-                Due Date
-                <input>
-            </label>
-            <lablel>
-                Client
-                <select data-bind="foreach: clients">
-                    <option data-bind="value: id, text: name"></option>
-                </select>
-            </lablel>
-            <label>
-                Priority
-                <input>
-            </label>
-            <lablel>
-                Product Area
-                <select data-bind="foreach: productAreas">
-                    <option data-bind="value: id, text: name"></option>
-                </select>
-            </lablel>
-        </div>
+    <body class="container">
+        <div data-bind='component: { name: "list-feature-request", params: { featureRequests: featureRequests }}'></div>
+        <div data-bind='component: "create-feature-request"'></div>
         <script>
-            function FeatureRequestViewModel() {
-                var self = this;
-                self.clientId = ko.observable();
-                self.productAreaId = ko.observable();
-                self.clients = [
-                    { id: 0, name: "Client A" },
-                    { id: 1, name: "Client B" },
-                    { id: 2, name: "Client C" }
-                ];
-                self.productAreas = [
-                    { id: 0, name: "Area A" },
-                    { id: 1, name: "Area B" },
-                    { id: 2, name: "Area C" },
-                    { id: 3, name: "Area D" }
-                ]
-            };
+            // http://www.knockmeout.net/2012/05/using-ko-native-pubsub.html
+            // http://knockoutjs.com/documentation/fn.html
+            var messageBus = new ko.subscribable();
 
-            ko.applyBindings(FeatureRequestViewModel());
+            var featureRequests = ko.observableArray();
+
+            // List feature requests
+            ko.components.register('list-feature-request', {
+                viewModel: function(params) {
+                    self.featureRequests = params.featureRequests
+                    self.title = ko.observableArray();
+                },
+                template: { require: 'text!static/knockout-templates/list-feature-request.html' }
+            });
+
+            // Create feature request
+            ko.components.register('create-feature-request', {
+                viewModel: function(params) {
+                    self.title = ko.observable();
+                    self.description = ko.observable();
+                    self.clients = [
+                        { id: 0, name: "Client A" },
+                        { id: 1, name: "Client B" },
+                        { id: 2, name: "Client C" }
+                    ];
+                    self.productAreas = [
+                        { id: 0, name: "Area A" },
+                        { id: 1, name: "Area B" },
+                        { id: 2, name: "Area C" },
+                        { id: 3, name: "Area D" }
+                    ];
+                    self.create = function() {
+                        messageBus.notifySubscribers({
+                            id: 0,
+                            title: self.title(),
+                            description: self.description()
+                        }, 'create');
+                        self.clear();
+                    };
+                    self.clear = function() {
+                        self.title("");
+                        self.description("");
+                    }
+                },
+                template: { require: 'text!static/knockout-templates/create-feature-request.html' }
+            });
+
+            messageBus.subscribe(function(value) {
+                featureRequests.push(value);
+            }, null, "create");
+
+            jQuery(function() {
+                ko.applyBindings();
+            });
         </script>
     </body>
 </html>

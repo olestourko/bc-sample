@@ -1,0 +1,16 @@
+<h3>Create Feature Request</h3>
+<input placeholder="Title" data-bind="value: title" class="u-full-width">
+<textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
+<div class="u-fulll-width">
+    <input placeholder="Due Date">
+    <input placeholder="Priority">
+</div>
+<div class="u-fulll-width">
+    <select data-bind="foreach: clients">
+        <option data-bind="value: id, text: name"></option>
+    </select>
+    <select data-bind="foreach: productAreas">
+        <option data-bind="value: id, text: name"></option>
+    </select>
+</div>
+<button data-bind="click: create">Create</button>
