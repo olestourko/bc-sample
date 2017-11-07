@@ -42,6 +42,19 @@ def create_feature_request():
     )
 
     client = Client.query.get(request.form['clientId'])
+    feature_request_with_same_priority = FeatureRequest.query.filter(
+        FeatureRequest.feature_request_to_clients.any(client_priority=request.form['priority'])
+    ).first()
+
+    if feature_request_with_same_priority is not None:
+        return jsonify({
+            'status': 'A feature request for the same client and priority already exists.'
+        })
+
+    return jsonify({
+        'status': 'ok'
+    })
+
     product_area = ProductArea.query.get(request.form['productAreaId'])
     set_feature_client(feature_request, client)
     set_feature_product_area(feature_request, product_area)

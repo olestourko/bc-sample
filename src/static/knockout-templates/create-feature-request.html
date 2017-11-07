@@ -2,7 +2,7 @@
 <input placeholder="Title" data-bind="value: title" class="u-full-width">
 <textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
 <div class="u-fulll-width">
-    <input data-bind="value: targetDate" placeholder="Target Date">
+    <input data-bind="value: targetDate" placeholder="Target Date (d-m-Y)">
     <input data-bind="value: priority" placeholder="Priority">
 </div>
 <div class="u-fulll-width">
@@ -13,4 +13,4 @@
         <option data-bind="value: id, text: name"></option>
     </select>
 </div>
-<button data-bind="click: create" class="button-primary">Create</button>
+<button data-bind="click: createClick" class="button-primary">Create</button>
