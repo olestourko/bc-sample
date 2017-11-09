@@ -11,23 +11,28 @@ This is a sample web application built with Python.
 #### [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
 The web application framework.
 
-`pip install flask`
+```
+pip install flask
+```
 
 #### [SQLAlchemy](https://www.sqlalchemy.org/)
 The ORM (+ some extensions).
 
-
-`pip install mysql-python` <- Will probably require _libmysqlclient_ (`sudo apt-get install libmysqlclient-dev`)
-`pip install sqlalchemy`
-`pip install flask-sqlalchemy`
-`pip install flask-migrate`
+```
+pip install mysql-python #<- Will probably require _libmysqlclient_ (sudo apt-get install libmysqlclient-dev)
+pip install sqlalchemy
+pip install flask-sqlalchemy
+pip install flask-migrate
+```
 
 - [Flask Integration](http://flask.pocoo.org/docs/0.12/quickstart/)
 - [Migrations Extension](https://flask-migrate.readthedocs.io/en/latest/)
 
 #### [Marshmallow](https://marshmallow.readthedocs.io/en/latest/)
 
-`pip install marshmallow`
+```
+pip install marshmallow
+```
 
 Model mapper for SQLAlchemy model -> JSON.
 
@@ -42,10 +47,20 @@ flask db migrate
 flask db upgrade
 ```
 
+Seed the db with clients and product ares:
+```
+python src/seed.py
+```
+
+Get frontend packages (requires [yarnpkg](https://yarnpkg.com/lang/en/docs/install/)):
+```
+yarn install
+```
+
 Running the application (from the `bc-sample` directory):
 ```
-FLASK_APP = $(pwd)/src/application.py
-CONFIG_FILEPATH = $(pwd)/config.py
+FLASK_APP=$(pwd)/src/application.py
+CONFIG_FILEPATH=$(pwd)/config.py
 export FLASK_APP
 export CONFIG_FILEPATH
 flask run

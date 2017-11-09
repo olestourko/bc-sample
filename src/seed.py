@@ -2,9 +2,9 @@ import os, sys
 sys.path.insert(0, os.getcwd()) # This makes the app, db import work
 from sqlalchemy import exc
 from src import app, db
+from src.application import set_feature_priority
 from models import Client, ProductArea, FeatureRequest
 import datetime
-from src.application import set_feature_priority
 
 def seed_db(database):
     try:
