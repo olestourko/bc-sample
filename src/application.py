@@ -1,7 +1,7 @@
 from flask import render_template, request, jsonify
 from flask_migrate import Migrate
 from src import app, db
-from models import *
+from src.models import *
 from model_mapping import ClientSchema, ProductAreaSchema, FeatureRequestSchema
 
 migrate = Migrate(app, db)

@@ -3,7 +3,7 @@ sys.path.insert(0, os.getcwd()) # This makes the app, db import work
 from sqlalchemy import exc
 from src import app, db
 from src.application import set_feature_priority
-from models import Client, ProductArea, FeatureRequest
+from src.models import Client, ProductArea, FeatureRequest
 import datetime
 
 def seed_db(database):
@@ -17,7 +17,6 @@ def seed_db(database):
         database.session.add(ProductArea(name="Billing"))
         database.session.add(ProductArea(name="Claims"))
         database.session.add(ProductArea(name="Reports"))
-
         feature_request = FeatureRequest(
             title="Feature Request 1",
             description="Suspendisse potenti. Nunc at lobortis velit, a condimentum leo. Donec pulvinar ac justo ac tristique.",
@@ -25,7 +24,7 @@ def seed_db(database):
         )
         feature_request.clients.append(client_1)
         feature_request.product_areas.append(product_area_1)
-        set_feature_priority(1)
+        set_feature_priority(feature_request, 1)
 
         database.session.add(feature_request)
 

@@ -4,11 +4,6 @@ from sqlalchemy.ext.associationproxy import association_proxy
 
 class FeatureRequest(db.Model):
     __tablename__ = 'feature_request'
-    """
-    Do this to prevent errors when models.py is imported multiple times.
-    TODO: Investigate if there's a better way of handing multiple imports.
-    """
-    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(256))
     description = db.Column(db.Text())
@@ -34,7 +29,6 @@ class FeatureRequest(db.Model):
 
 class Client(db.Model):
     __tablename__ = 'client'
-    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
     # Relation to FeatureRequests
@@ -43,7 +37,6 @@ class Client(db.Model):
 
 class ProductArea(db.Model):
     __tablename__ = 'product_area'
-    __table_args__ = {'extend_existing': True}
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(256))
 
@@ -54,7 +47,6 @@ class ProductArea(db.Model):
 """
 class FeatureRequestToClient(db.Model):
     __tablename__ = 'feature_request_to_client'
-    __table_args__ = {'extend_existing': True}
     feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id'), primary_key=True)
     client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
     client_priority = db.Column(db.Integer)
@@ -68,7 +60,6 @@ class FeatureRequestToClient(db.Model):
 
 class FeatureRequestToProductArea(db.Model):
     __tablename__ = 'feature_request_to_product_area'
-    __table_args__ = {'extend_existing': True}
     feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id'), primary_key=True)
     product_area_id = db.Column(db.Integer, db.ForeignKey('product_area.id'), primary_key=True)
     feature_request = db.relationship(FeatureRequest)
