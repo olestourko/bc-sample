@@ -44,11 +44,13 @@ flask db upgrade
 ```
 
 Seed the db with clients and product ares:
+
 ```
 python src/seed.py
 ```
 
 **Get frontend packages**
+
 Requires [yarnpkg](https://yarnpkg.com/lang/en/docs/install/):
 ```
 yarn install

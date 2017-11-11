@@ -43,7 +43,8 @@ def create_feature_request():
 
     client = Client.query.get(request.form['clientId'])
     feature_request_with_same_priority = FeatureRequest.query.filter(
-        FeatureRequest.feature_request_to_clients.any(client_priority=request.form['priority'])
+        FeatureRequest.feature_request_to_clients.any(client_id=request.form['clientId'],
+                                                      client_priority=request.form['priority'])
     ).first()
 
     if feature_request_with_same_priority is not None:
