@@ -2,7 +2,39 @@ var featureRequests = ko.observableArray();
 var clients = ko.observableArray();
 var productAreas = ko.observableArray();
 
-// List feature requests
+function pageViewModel() {
+    var self = this;
+    // http://www.knockmeout.net/2012/05/using-ko-native-pubsub.html
+    // http://knockoutjs.com/documentation/fn.html
+    self.messageBus = new ko.subscribable();
+    self.messageBus.subscribe(function(data) {
+        jQuery.post({
+            url: 'create_feature_request',
+            data: data,
+            success: function(serverResponseData) {
+                if (serverResponseData.status == 'ok') {
+                    fetch_feature_requests();
+                    self.messageBus.notifySubscribers({}, "clear");
+                } else {
+                    alert(serverResponseData.status);
+                }
+            }
+        }).fail(function() {
+            alert("Error creating feature request. You might be passing invalid input.");
+        })
+    }, {}, "create");
+}
+var vm = new pageViewModel();
+jQuery(function() {
+    ko.applyBindings(vm);
+    jQuery.getJSON('fetch_clients', function(data) {
+        ko.utils.arrayPushAll(clients, data);
+    });
+    fetch_feature_requests();
+    jQuery.getJSON('fetch_product_areas', function(data) {
+        ko.utils.arrayPushAll(productAreas, data);
+    });
+});
 ko.components.register('list-feature-request', {
     viewModel: function(params) {
         var self = this;
@@ -10,16 +42,6 @@ ko.components.register('list-feature-request', {
     },
     template: { require: 'text!static/knockout-templates/list-feature-request.html' }
 });
-
-// http://www.knockmeout.net/2012/05/using-ko-native-pubsub.html
-// http://knockoutjs.com/documentation/fn.html
-var messageBus = new ko.subscribable();
-var onCreateClick = function(component, data) {
-    messageBus.notifySubscribers(data, 'create');
-    component.clear();
-}
-
-// Create feature request form
 ko.components.register('create-feature-request', {
     viewModel: function(params) {
         var self = this;
@@ -31,7 +53,8 @@ ko.components.register('create-feature-request', {
         self.selectedProductArea = ko.observable();
         self.clients = params.clients;
         self.productAreas = params.productAreas;
-        self.createClick = function() {
+        self.messageBus = params.messageBus;
+        self.create = function() {
             data = {
                 title: self.title(),
                 description: self.description(),
@@ -39,44 +62,18 @@ ko.components.register('create-feature-request', {
                 priority: self.priority(),
                 clientId: self.selectedClient(),
                 productAreaId: self.selectedProductArea()
-            }
-            params.onCreateClick(self, data);
+            };
+            self.messageBus.notifySubscribers(data, 'create');
         };
-        self.clear = function() {
+        // These are the equivalent of functions, using the message bus
+        self.messageBus.subscribe(function(data) {
             self.title("");
             self.description("");
             self.targetDate("");
             self.priority("");
-        }
+        }, {}, "clear");
     },
     template: { require: 'text!static/knockout-templates/create-feature-request.html' }
-});
-
-messageBus.subscribe(function(formData) {
-    jQuery.post({
-        url: 'create_feature_request',
-        data: formData,
-        success: function(serverResponseData) {
-            if(serverResponseData.status == 'ok') {
-                fetch_feature_requests();
-            } else {
-                alert(serverResponseData.status);
-            }
-        }
-    }).fail(function() {
-        alert("Error creating feature request. You might be passing invalid input.");
-    })
-}, null, "create");
-
-jQuery(function() {
-    ko.applyBindings();
-    jQuery.getJSON('fetch_clients', function(data) {
-        ko.utils.arrayPushAll(clients, data);
-    });
-    fetch_feature_requests();
-    jQuery.getJSON('fetch_product_areas', function(data) {
-        ko.utils.arrayPushAll(productAreas, data);
-    });
 });
 
 function fetch_feature_requests() {

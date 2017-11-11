@@ -1,9 +1,9 @@
 <h3>Create Feature Request</h3>
-<input placeholder="Title" data-bind="value: title" class="u-full-width">
+<input placeholder="Title" data-bind="value: title" class="u-full-width" data-parsley-maxlength="256" required>
 <textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
 <div class="u-fulll-width">
     <input data-bind="value: targetDate" placeholder="Target Date (d-m-Y)">
-    <input data-bind="value: priority" placeholder="Priority">
+    <input data-bind="value: priority" placeholder="Priority" required>
 </div>
 <div class="u-fulll-width">
     <select data-bind="foreach: clients, value: selectedClient">
@@ -13,4 +13,4 @@
         <option data-bind="value: id, text: name"></option>
     </select>
 </div>
-<button data-bind="click: createClick" class="button-primary">Create</button>
+<button data-bind="click: create" class="button-primary">Create</button>
