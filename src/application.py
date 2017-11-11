@@ -51,17 +51,13 @@ def create_feature_request():
             'status': 'A feature request for the same client and priority already exists.'
         })
 
-    return jsonify({
-        'status': 'ok'
-    })
-
     product_area = ProductArea.query.get(request.form['productAreaId'])
     set_feature_client(feature_request, client)
     set_feature_product_area(feature_request, product_area)
     set_feature_priority(feature_request, request.form['priority'])
+    db.session.add(feature_request)
+    db.session.commit()
 
-    # db.session.add(feature_request)
-    # db.session.commit()
     return jsonify({
         'status': 'ok'
     })

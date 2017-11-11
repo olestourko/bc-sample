@@ -6,3 +6,13 @@
 .feature-request:last-of-type {
     border-bottom: none;
 }
+
+.parsley-errors-list {
+    position: relative;
+    margin-top: -0.5em;
+    color: #ff0000;
+}
+
+.parsley-errors-list li {
+    list-style: none;
+}

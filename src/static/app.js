@@ -63,7 +63,9 @@ ko.components.register('create-feature-request', {
                 clientId: self.selectedClient(),
                 productAreaId: self.selectedProductArea()
             };
-            self.messageBus.notifySubscribers(data, 'create');
+            if (jQuery('.create-feature-request').parsley().validate()) {
+                self.messageBus.notifySubscribers(data, 'create');
+            }
         };
         // These are the equivalent of functions, using the message bus
         self.messageBus.subscribe(function(data) {

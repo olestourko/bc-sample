@@ -1,16 +1,17 @@
-<h3>Create Feature Request</h3>
-<input placeholder="Title" data-bind="value: title" class="u-full-width" data-parsley-maxlength="256" required>
-<textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
-<div class="u-fulll-width">
-    <input data-bind="value: targetDate" placeholder="Target Date (d-m-Y)">
-    <input data-bind="value: priority" placeholder="Priority" required>
-</div>
-<div class="u-fulll-width">
-    <select data-bind="foreach: clients, value: selectedClient">
-        <option data-bind="value: id, text: name"></option>
-    </select>
-    <select data-bind="foreach: productAreas, value: selectedProductArea">
-        <option data-bind="value: id, text: name"></option>
-    </select>
-</div>
-<button data-bind="click: create" class="button-primary">Create</button>
+<form class="create-feature-request">
+    <h3>Create Feature Request</h3>
+    <input placeholder="Title" data-bind="value: title" class="u-full-width" data-parsley-maxlength="256" required>
+    <textarea placeholder="Description" data-bind="value: description" class="u-full-width"></textarea>
+    <input data-bind="value: targetDate" placeholder="Target Date (d-m-Y)" required>
+    <input data-bind="value: priority" placeholder="Priority" data-parsley-type="integer" required>
+    </div>
+    <div class="u-fulll-width">
+        <select data-bind="foreach: clients, value: selectedClient">
+            <option data-bind="value: id, text: name"></option>
+        </select>
+        <select data-bind="foreach: productAreas, value: selectedProductArea">
+            <option data-bind="value: id, text: name"></option>
+        </select>
+    </div>
+    <button data-bind="click: create" class="button-primary">Create</button>
+</form>
