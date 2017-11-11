@@ -1,6 +1,16 @@
 .feature-request {
+    display: block;
     border-bottom: 1px solid #E1E1E1;
     margin-bottom: 1.5em;
+}
+
+.feature-request p {
+    line-height: 1em;
+    margin-bottom: 0.5em;
+}
+
+.feature-request button {
+    margin: 0.5em 0 1.5em 0;
 }
 
 .feature-request:last-of-type {

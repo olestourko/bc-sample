@@ -7,6 +7,7 @@ function pageViewModel() {
     // http://www.knockmeout.net/2012/05/using-ko-native-pubsub.html
     // http://knockoutjs.com/documentation/fn.html
     self.messageBus = new ko.subscribable();
+    // Subscribe to create
     self.messageBus.subscribe(function(data) {
         jQuery.post({
             url: 'create_feature_request',
@@ -23,6 +24,22 @@ function pageViewModel() {
             alert("Error creating feature request. You might be passing invalid input.");
         })
     }, {}, "create");
+    // Subscribe to remove
+    self.messageBus.subscribe(function(data) {
+        jQuery.post({
+            url: 'delete_feature_request',
+            data: data,
+            success: function(serverResponseData) {
+                if (serverResponseData.status == 'ok') {
+                    fetch_feature_requests();
+                } else {
+                    alert(serverResponseData.status);
+                }
+            }
+        }).fail(function() {
+            alert("Error creating feature request. Does the id you passed actually exist?.");
+        })
+    }, {}, "remove");
 }
 var vm = new pageViewModel();
 jQuery(function() {
@@ -35,12 +52,23 @@ jQuery(function() {
         ko.utils.arrayPushAll(productAreas, data);
     });
 });
-ko.components.register('list-feature-request', {
+ko.components.register('feature-request', {
     viewModel: function(params) {
         var self = this;
-        self.featureRequests = params.featureRequests
+        self.featureRequest = params.featureRequest;
+        self.id = self.featureRequest.id;
+        self.title = self.featureRequest.title;
+        self.client = self.featureRequest.clients[0]['name'];
+        self.productArea = self.featureRequest.product_areas[0]['name'];
+        self.targetDate = self.featureRequest.target_date;
+        self.priority = self.featureRequest.priority;
+        self.description = self.featureRequest.description;
+        self.messageBus = params.messageBus;
+        self.remove = function() {
+            self.messageBus.notifySubscribers({id: self.id}, 'remove');
+        }
     },
-    template: { require: 'text!static/knockout-templates/list-feature-request.html' }
+    template: { require: 'text!static/knockout-templates/feature-request.html' }
 });
 ko.components.register('create-feature-request', {
     viewModel: function(params) {

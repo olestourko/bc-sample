@@ -22,7 +22,10 @@
     <body class="container">
         <create-feature-request params="messageBus: messageBus, clients: clients, productAreas: productAreas"></create-feature-request>
         <hr>
-        <list-feature-request params="featureRequests: featureRequests"></list-feature-request>
+        <h3>Feature Requests</h3>
+        <div data-bind="foreach: featureRequests">
+            <feature-request params="messageBus: $root.messageBus, featureRequest: $data" class="feature-request"></feature-request>
+        </div>
         <script src="{{ url_for('static', filename='app.js') }}"></script>
     </body>
 </html>

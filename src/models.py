@@ -47,8 +47,8 @@ class ProductArea(db.Model):
 """
 class FeatureRequestToClient(db.Model):
     __tablename__ = 'feature_request_to_client'
-    feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id'), primary_key=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), primary_key=True)
+    feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id', ondelete="CASCADE"), primary_key=True)
+    client_id = db.Column(db.Integer, db.ForeignKey('client.id', ondelete="CASCADE"), primary_key=True)
     client_priority = db.Column(db.Integer)
     feature_request = db.relationship(FeatureRequest) # Can also do this with backrefs: http://docs.sqlalchemy.org/en/latest/orm/backref.html
     client = db.relationship(Client)
@@ -60,8 +60,8 @@ class FeatureRequestToClient(db.Model):
 
 class FeatureRequestToProductArea(db.Model):
     __tablename__ = 'feature_request_to_product_area'
-    feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id'), primary_key=True)
-    product_area_id = db.Column(db.Integer, db.ForeignKey('product_area.id'), primary_key=True)
+    feature_request_id = db.Column(db.Integer, db.ForeignKey('feature_request.id', ondelete="CASCADE"), primary_key=True)
+    product_area_id = db.Column(db.Integer, db.ForeignKey('product_area.id', ondelete="CASCADE"), primary_key=True)
     feature_request = db.relationship(FeatureRequest)
     product_area = db.relationship(ProductArea)
 

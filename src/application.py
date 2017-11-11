@@ -62,6 +62,16 @@ def create_feature_request():
         'status': 'ok'
     })
 
+@app.route('/delete_feature_request', methods=['POST'])
+def delete_feature_request():
+    feature_request = FeatureRequest.query.get(request.form['id'])
+    db.session.delete(feature_request)
+    db.session.commit()
+
+    return jsonify({
+        'status': 'ok'
+    })
+
 def set_feature_client(feature, client):
     """
     Set the client for a feature request.
