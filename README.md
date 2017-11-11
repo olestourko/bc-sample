@@ -1,7 +1,10 @@
 ## BC Flask Sample
 This is a sample web application built with Python.
 
+---
+
 #### Dependencies
+
 
 ##### [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
 The web application framework.
@@ -25,6 +28,7 @@ pip install flask-migrate
 
 ##### [Marshmallow](https://marshmallow.readthedocs.io/en/latest/)
 Model mapper for SQLAlchemy model -> JSON.
+
 ```
 pip install marshmallow
 ```
@@ -36,7 +40,9 @@ pip install marshmallow
 First get the dependencies above, then...
 
 **Initial Migrations and Seeding**
+
 First specifiy your database credentials in a file called `/config.py`. (check out /`example_config.py`)
+
 ```
 flask migrate init
 flask db migrate
@@ -57,6 +63,7 @@ yarn install
 ```
 
 **Start the Flask server**
+
 From the `bc-sample` directory:
 ```
 FLASK_APP=$(pwd)/src/application.py
@@ -77,6 +84,7 @@ export CONFIG_FILEPATH
 python -m unittest discover
 ```
 
+---
 
 ### Q&A / Implementation Notes:
 **What was the general development workflow?**
