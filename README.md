@@ -6,15 +6,13 @@ This is a sample web application built with Python.
 #### Dependencies
 
 
-##### [Flask](http://flask.pocoo.org/docs/0.12/quickstart/)
-The web application framework.
+**[Flask](http://flask.pocoo.org/docs/0.12/quickstart/)**: The web application framework.
 
 ```
 pip install flask
 ```
 
-##### [SQLAlchemy](https://www.sqlalchemy.org/)
-The ORM (+ some extensions).
+**[SQLAlchemy](https://www.sqlalchemy.org/)**:  The ORM (+ some extensions).
 
 ```
 pip install mysql-python #<- Will probably require _libmysqlclient_ (sudo apt-get install libmysqlclient-dev)
@@ -26,8 +24,7 @@ pip install flask-migrate
 - [Flask Integration](http://flask.pocoo.org/docs/0.12/quickstart/)
 - [Migrations Extension](https://flask-migrate.readthedocs.io/en/latest/)
 
-##### [Marshmallow](https://marshmallow.readthedocs.io/en/latest/)
-Model mapper for SQLAlchemy model -> JSON.
+**[Marshmallow](https://marshmallow.readthedocs.io/en/latest/)**:  Model mapper for SQLAlchemy model -> JSON.
 
 ```
 pip install marshmallow
