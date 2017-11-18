@@ -41,7 +41,7 @@ First get the dependencies above, then...
 First specifiy your database credentials in a file called `/config.py`. (check out /`example_config.py`)
 
 ```
-flask migrate init
+flask db init
 flask db migrate
 flask db upgrade
 ```
@@ -63,10 +63,8 @@ yarn install
 
 From the `bc-sample` directory:
 ```
-FLASK_APP=$(pwd)/src/application.py
-CONFIG_FILEPATH=$(pwd)/config.py
-export FLASK_APP
-export CONFIG_FILEPATH
+export FLASK_APP=$(pwd)/src/application.py
+export CONFIG_FILEPATH=$(pwd)/config.py
 flask run
 ```
 Note: You should use a proper application server like uWSGI in production, but this is good enough for demo purposes.
@@ -74,10 +72,9 @@ Note: You should use a proper application server like uWSGI in production, but t
 ---
 
 #### Unit tests
-They're in the `/tests` folder. Similair to running the application, set an env variable with the config file location. You should set up a seperate DB just for tests.
+They're in the `/tests` folder. Similar to running the application, set an env variable with the config file location. You should set up a seperate DB just for tests.
 ```
-CONFIG_FILEPATH=$(pwd)/tests/config.py
-export CONFIG_FILEPATH
+export CONFIG_FILEPATH=$(pwd)/tests/config.py
 python -m unittest discover
 ```
 
